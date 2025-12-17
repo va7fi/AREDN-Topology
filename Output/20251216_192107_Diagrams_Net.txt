@@ -1,4 +1,4 @@
-;Found 80 nodes and 119 connections.
+;Found 79 nodes and 118 connections.
 ;
 ;INSTRUCTIONS:
 ;Go to https://app.diagrams.net
@@ -92,9 +92,6 @@ ve7na-808wing-mtbenson->DTD->ve7na-radio-room
 ve7na-808wing-mtbenson->DTD->ve7na-vancouver-island-supernode
 ve7na-808wing-sectorn->DTD->ve7na-radio-room
 ve7na-808wing-sectorn->DTD->ve7na-vancouver-island-supernode
-ve7na-mt-benson-nw->RF->ve7top-benson-feed
-ve7na-mt-benson-nw->RF->ve7sce-lhg-1
-ve7na-mt-benson-nw->DTD->ve7na-mt-benson-se
 ve7na-radio-room->WRGRD->ve7top-5hacd2hnd-b
 ve7na-radio-room->WRGRD->ve7zdh-wrt-1
 ve7na-radio-room->DTD->ve7na-vancouver-island-supernode
@@ -115,10 +112,12 @@ ve7sce-hap-1->DTD->ve7sce-lhg-1
 ve7sce-hap-1->DTD->ve7sce-mant-1
 ve7sce-hap-1->DTD->ve7sce-rckt-1
 ve7sce-lhg-1->DTD->ve7sce-mant-1
+ve7sce-lhg-1->RF->ve7na-mt-benson-nw
 ve7sce-lhg-1->DTD->ve7sce-rckt-1
 ve7sce-mant-1->DTD->ve7sce-rckt-1
 ve7sst-home->RF->ve7sst-nsm5
 ve7top-5hacd2hnd-b->DTD->ve7top-benson-feed
+ve7top-benson-feed->RF->ve7na-mt-benson-nw
 ve7top-hac3->WRGRD->ve7vpg-hap-ac3-1
 ve7urc-500-oldpo->DTD->ve7urc-to-ve7emo
 ve7urc-500-oldpo->DTD->ve7urc-oldpo-north

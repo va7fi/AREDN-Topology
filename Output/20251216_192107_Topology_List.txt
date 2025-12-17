@@ -1,4 +1,4 @@
-Found 80 nodes and 119 connections.
+Found 79 nodes and 118 connections.
 
 va7bce-100
    * va7bce-500-landfill-link (DTD)
@@ -162,11 +162,6 @@ ve7na-808wing-sectorn
    * ve7na-808wing-mtbenson (DTD)
    * ve7na-radio-room (DTD)
    * ve7na-vancouver-island-supernode (DTD)
-ve7na-mt-benson-nw
-   * ve7top-benson-feed (RF)
-   * ve7sce-lhg-1 (RF)
-   * ve7na-mt-benson-se (DTD)
-   * ve7kod-benson (RF)
 ve7na-radio-room
    * ve7top-5hacd2hnd-b (WRGRD)
    * ve7zdh-wrt-1 (WRGRD)

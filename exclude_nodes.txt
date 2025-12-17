@@ -2,8 +2,4 @@
 # chronically unreachable nodes speeds up the script by a few seconds
 # since the script doesn't have to wait until the end of the timeout
 # period before halting.
- 
-ve7na-lostlk-hap1
-ve7na-lost-lake-ne
-ve7na-lost-lake-mt-benson-link
 

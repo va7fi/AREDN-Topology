@@ -32,13 +32,18 @@ date_time = time.strftime('%Y%m%d_%H%M%S', time.localtime())
 num_of_threads = 30
 timeout = 15
 olsr_node = 'VE7NA-RADIO-ROOM'
-babel_node = 'VE7RBE-HAP-1'
+babel_node = 'VE7ZDH-tube-1'
 
+# Get script path and create Output folder if it doesn't exist.
 if sys.platform == 'win32':
     script_path = os.path.abspath(__name__).rpartition('\\')[0]+'\\'
+    output_path = script_path + 'Output\\'
 else:
     script_path = os.path.abspath(__file__).rpartition('/')[0]+'/'
+    output_path = script_path + 'Output/'
 
+if not os.path.exists(output_path):
+    os.makedirs(output_path)
 
 # Some user input variables:
 olsr_message = 'Enter your node id or simply press Enter to use:'
@@ -47,10 +52,10 @@ print('#' * 75)
 print(f'{olsr_message}  {olsr_node}')
 my_node1 = input().casefold() or olsr_node
 print(f'{babel_message}  {babel_node} , or Enter "N" to skip.')
-my_node2 = input().casefold() or 'VE7RBE-HAP-1'
+my_node2 = input().casefold() or babel_node
 
 
-# The progress bar
+# Progress Bar:
 def progress_bar(progress, total, start_time):
     '''
     Displays and updates a console progress bar.  Modified from:
@@ -137,11 +142,12 @@ nodes = sorted(nodes, key=str.lower)
 json_pages = {}     # {node:json_page, ...}
 failed_nodes = []   # Nodes that failed to download.
 
-# Download json page for a node. Called repeatedly by the Threading process.
-
 
 def download_json(node):
-    # some older firmware versions seem to require the 8080 port number
+    '''
+    Download json page for a node. Called repeatedly by the Threading process.
+    Some older firmware versions seem to require the 8080 port number.
+    '''
     suffix = '.local.mesh:8080/cgi-bin/sysinfo.json?link_info=1'
     url = f'http://{node}{suffix}'
 
@@ -282,7 +288,7 @@ for i, tuple in enumerate(topo):
         lines.append(f'{tuple[0]}->{tuple[2]}->{tuple[1]}\n')
         link_num = link_num + 1
 
-with open(script_path + date_time + '_Diagrams_Net.txt', 'w') as file:
+with open(output_path + date_time + '_Diagrams_Net.txt', 'w') as file:
     file.write(f';Found {len(nodes)} nodes and {link_num} connections.\n')
     file.write(instructions)
     for line in lines:
@@ -291,7 +297,7 @@ file.close()
 
 # Topology_List.txt
 files.append('Topology_List.txt')
-with open(script_path + date_time + '_Topology_List.txt', 'w') as file:
+with open(output_path + date_time + '_Topology_List.txt', 'w') as file:
     file.write(f'Found {len(nodes)} nodes and {link_num} connections.\n\n')
     for i, tuple in enumerate(topo):
         jp = json_pages[tuple[0]]
@@ -314,7 +320,7 @@ file.close()
 # Topology.csv
 files.append('Topology.csv')
 header = 'Node 1,Node 2,Link Type\n'
-with open(script_path + date_time + '_Topology.csv', 'w') as file:
+with open(output_path + date_time + '_Topology.csv', 'w') as file:
     file.write(header)
     for tuple in topo:
         jp = json_pages[tuple[0]]
@@ -333,7 +339,7 @@ files.append('Node_Info.csv')
 header = 'Node,Lat,Lon,Grid Square,Desc,Firmware,API,Description,Uptime,' \
     + 'Channel,Bandwidth \n'
 
-with open(script_path + date_time + '_Node_Info.csv', 'w') as file:
+with open(output_path + date_time + '_Node_Info.csv', 'w') as file:
     file.write(header)
     for node in nodes:
         line = []
@@ -369,7 +375,7 @@ file.close()
 # Final Message
 files.sort()
 print()
-print(f'These output files were saved in   {script_path}')
+print(f'These output files were saved in   {output_path}')
 for file in files:
     print(f'  * {date_time}_{file}')
 print()

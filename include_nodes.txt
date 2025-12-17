@@ -1,0 +1,10 @@
+# These are nodes with API version 1.13 or older which are not visible
+# to the script because they don't have the 'lan.' prefix.  Listing them
+# here will add them manually to the list of nodes.  If a non-existant
+# node is added manually, the script will try to load it until the time
+# out period is reached.
+ 
+ve7urc-500-oldpo
+ve7urc-oldpo-north
+
+

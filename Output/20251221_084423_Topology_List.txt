@@ -1,4 +1,4 @@
-Found 79 nodes and 118 connections.
+Found 86 nodes and 124 connections.
 
 va7bce-100
    * va7bce-500-landfill-link (DTD)
@@ -15,6 +15,9 @@ va7bce-501
    * ve7ahe-501 (RF)
 va7cpm-hap-yvr
    * ve7na-radio-room (WRGRD)
+va7dxx-benson-link
+   * va7dxx-hap-1 (DTD)
+   * ve7na-mt-benson-se (RF)
 va7dxx-hap-1
    * va7dxx-benson-link (DTD)
    * ve7na-radio-room (WRGRD)
@@ -22,6 +25,7 @@ va7eet-home
    * va7pam-500-landfilleast (RF)
 va7fi-hapac3-1
    * va7uld-hap-yvr1 (WRGRD)
+   * ve7tbp-hap-1 (WRGRD)
    * va7rjq-hap-1 (WRGRD)
    * va7lsp-hapac3-1 (WRGRD)
    * ve7sce-hap-1 (WRGRD)
@@ -33,8 +37,8 @@ va7gfd-hap-1
    * ve7na-radio-room (WRGRD)
    * va7gfd-radio-room-link (DTD)
 va7gfd-radio-room-link
-   * va7gfd-hap-1 (DTD)
    * va7gfd-benson-link (RF)
+   * va7gfd-hap-1 (DTD)
 va7itr-rtr-1
    * ve7cvw-hapac3-1 (WRGRD)
 va7jdj-1
@@ -71,17 +75,17 @@ va7nm-shack
 va7pam-500-landfill-east
    * va7eet-home (RF)
    * va7pam-501-landfill-north (DTD)
-   * ve7urc-500-oldpo (RF)
-   * va7pam-500-ve7ku-link (DTD)
-   * ve7tfm-502 (RF)
    * ve7ook-pbe-m5-3 (RF)
+   * va7pam-500-ve7ku-link (DTD)
+   * ve7urc-500-oldpo (RF)
+   * ve7tfm-502 (RF)
 va7pam-500-landfilleast
    * va7eet-home (RF)
    * va7pam-501-landfill-north (DTD)
-   * ve7urc-500-oldpo (RF)
-   * va7pam-500-ve7ku-link (DTD)
-   * ve7tfm-502 (RF)
    * ve7ook-pbe-m5-3 (RF)
+   * va7pam-500-ve7ku-link (DTD)
+   * ve7urc-500-oldpo (RF)
+   * ve7tfm-502 (RF)
 va7pam-500-ve7ku-link
    * va7pam-500-landfilleast (DTD)
    * va7pam-501-landfill-north (DTD)
@@ -131,6 +135,16 @@ ve7cvw-hapac3-1
    * va7itr-rtr-1 (WRGRD)
    * ve7na-radio-room (WRGRD)
    * ve7cvw-5g30-1 (DTD)
+ve7dnr-woodley-erskine-link
+   * ve7dnr-woodley-range-sw (DTD)
+   * ve7dnr-woodley-range-nw (DTD)
+ve7dnr-woodley-range-nw
+   * ve7dnr-woodley-erskine-link (DTD)
+   * ve7dnr-woodley-range-sw (DTD)
+ve7dnr-woodley-range-sw
+   * ve7dnr-woodley-erskine-link (DTD)
+   * ve7dnr-woodley-range-nw (DTD)
+   * ve7lse-woodley-link (RF)
 ve7emo-to-ve7urc
    * ve7urc-to-ve7emo (RF)
 ve7gde-hap-1
@@ -153,15 +167,37 @@ ve7kod-cokley
    * ve7kod-benson (DTD)
 ve7ku-500-landfill-link
    * va7pam-500-ve7ku-link (RF)
+ve7lse-hap-1
+   * ve7lse-woodley-link (DTD)
+   * ve7na-radio-room (WRGRD)
+ve7lse-woodley-link
+   * ve7lse-hap-1 (DTD)
+   * ve7dnr-woodley-range-sw (RF)
 ve7na-808wing-mtbenson
-   * ve7na-808wing-sectorn (DTD)
-   * ve7na-mt-benson-se (RF)
    * ve7na-radio-room (DTD)
    * ve7na-vancouver-island-supernode (DTD)
+   * ve7na-mt-benson-se (RF)
+   * ve7na-808wing-sectorn (DTD)
 ve7na-808wing-sectorn
    * ve7na-808wing-mtbenson (DTD)
    * ve7na-radio-room (DTD)
    * ve7na-vancouver-island-supernode (DTD)
+ve7na-lost-lake-ne
+   * ve7na-lostlk-hap1 (DTD)
+   * ve7na-lost-lake-mt-benson-link (DTD)
+ve7na-mt-benson-nw
+   * ve7top-benson-feed (RF)
+   * ve7sce-lhg-1 (RF)
+   * ve7na-mt-benson-se (DTD)
+   * ve7kod-benson (RF)
+ve7na-mt-benson-se
+   * ve7na-808wing-mtbenson (RF)
+   * va7jdj-conc (RF)
+   * va7gfd-benson-link (RF)
+   * va7wtb-benson-link (RF)
+   * ve7na-mt-benson-nw (DTD)
+   * va7dxx-benson-link (RF)
+   * ve7na-lost-lake-mt-benson-link (RF)
 ve7na-radio-room
    * ve7top-5hacd2hnd-b (WRGRD)
    * ve7zdh-wrt-1 (WRGRD)
@@ -179,14 +215,14 @@ ve7na-radio-room
    * va7mpg-hap-1 (WRGRD)
    * ve7vpg-hap-ac3-1 (WRGRD)
    * ve7cvw-hapac3-1 (WRGRD)
-   * va7gfd-hap-1 (WRGRD)
    * va7wpm-hap-1 (WRGRD)
-   * ve7na-808wing-sectorn (DTD)
-   * ve7gde-hap-1 (WRGRD)
-   * ve7ptn-hap-1 (WRGRD)
-   * va7tuf-hap-1 (WRGRD)
    * ve7odg-ar750-1 (WRGRD)
+   * ve7gde-hap-1 (WRGRD)
+   * va7tuf-hap-1 (WRGRD)
+   * ve7ptn-hap-1 (WRGRD)
+   * ve7na-808wing-sectorn (DTD)
    * va7dxx-hap-1 (WRGRD)
+   * va7gfd-hap-1 (WRGRD)
    * ve7bef-hap-1 (WRGRD)
    * va7tuf-hap-2 (WRGRD)
 ve7na-vancouver-island-supernode
@@ -204,15 +240,15 @@ ve7ook-pbe-m5-3
 ve7pmd-hapac3-1
    * ve7na-radio-room (WRGRD)
 ve7ptn-hap-1
-   * ve7ptn-lhg-1 (DTD)
    * ve7na-radio-room (WRGRD)
+   * ve7ptn-lhg-1 (DTD)
 ve7ptn-lhg-1
    * ve7ptn-hap-1 (DTD)
    * ve7sce-mant-1 (RF)
 ve7sce-hap-1
-   * va7fi-hapac3-1 (WRGRD)
-   * ve7sce-lhg-1 (DTD)
    * ve7sce-mant-1 (DTD)
+   * ve7sce-lhg-1 (DTD)
+   * va7fi-hapac3-1 (WRGRD)
    * ve7sce-rckt-1 (DTD)
 ve7sce-lhg-1
    * ve7sce-mant-1 (DTD)
@@ -226,14 +262,16 @@ ve7sce-mant-1
    * ve7sce-hap-1 (DTD)
    * va7mpg-dish1 (RF)
 ve7sce-rckt-1
-   * ve7sce-hap-1 (DTD)
-   * ve7sce-lhg-1 (DTD)
    * ve7sce-mant-1 (DTD)
+   * ve7sce-lhg-1 (DTD)
+   * ve7sce-hap-1 (DTD)
 ve7sst-home
    * ve7kod-ap (WRGRD)
    * ve7sst-nsm5 (RF)
 ve7sst-nsm5
    * ve7sst-home (RF)
+ve7tbp-hap-1
+   * va7fi-hapac3-1 (WRGRD)
 ve7tfm-502
    * va7nm-shack (WRGRD)
    * va7bce-500-landfill-link (WRGRD)
@@ -278,19 +316,6 @@ ve7vpg-mtw-se
    * ve7cvw-5g30-1 (RF)
    * va7nm-shack (WRGRD)
    * va7nm-mtw-ne (DTD)
-ve7zdh-halow-ht-1
-   * ve7zdh-wrt-1 (DTD)
-   * ve7zdh-tube-1 (RF)
-   * ve7zdh-halow-ht-2 (RF)
-ve7zdh-halow-ht-2
-   * ve7zdh-tube-1 (RF)
-   * ve7zdh-halow-ht-1 (RF)
-ve7zdh-tube-1
-   * ve7zdh-wrt-1 (DTD)
-   * ve7zdh-halow-ht-1 (RF)
-   * ve7zdh-halow-ht-2 (RF)
 ve7zdh-wrt-1
-   * ve7zdh-halow-ht-1 (DTD)
-   * ve7zdh-tube-1 (DTD)
    * ve7na-radio-room (WRGRD)
    * va7jjr-hap-1 (WRGRD)

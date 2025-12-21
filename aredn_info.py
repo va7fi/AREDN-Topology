@@ -32,7 +32,7 @@ date_time = time.strftime('%Y%m%d_%H%M%S', time.localtime())
 num_of_threads = 30
 timeout = 15
 olsr_node = 'VE7NA-RADIO-ROOM'
-babel_node = 'VE7ZDH-tube-1'
+babel_node = 'VE7TBP-HAP-1'
 
 # Get script path and create Output folder if it doesn't exist.
 if sys.platform == 'win32':
@@ -116,22 +116,23 @@ if os.path.exists(script_path + 'exclude_nodes.txt'):
 
 # Read my_json1 and extract hosts from {'hosts': [{'name' : host}]}.
 for host in my_json1.get('hosts', ''):
-    if (host['name'][0:4] == 'lan.' and
-            host['name'][4:-11].casefold() not in ignore_nodes):
+    if (host['name'][0:4] == 'lan.'
+            and host['name'][4:-11].casefold() not in ignore_nodes):
         nodes.append(host['name'][4:-11].casefold())
 
 # Read my_json2 and extract the nodes that were not in my_json1.
 if my_node2 != 'n':
     for host in my_json2.get('nodes', ''):
-        if (host['name'].casefold() not in nodes and
-                host['name'].casefold() not in ignore_nodes):
+        if (host['name'].casefold() not in nodes
+                and host['name'].casefold() not in ignore_nodes):
             nodes.append(host['name'].casefold())
 
 # Read include_nodes.txt
 if os.path.exists(script_path + 'include_nodes.txt'):
     with open(script_path + 'include_nodes.txt') as file:
         for line in file:
-            if (line[0] != "#" and not line.isspace()):
+            if (line[0] != "#" and not line.isspace()
+                    and line.strip() not in nodes):
                 nodes.append(line.strip())
     file.close()
 

@@ -1,5 +1,10 @@
 # Change Log
 
+### 2025.12.21
+   - Fixed a small bug where nodes added in the `include_nodes.txt` that
+     are also found by the API were being duplicated.
+   - Changed default Babel-Only node to VE7TBP-HAP-1
+
 ### 2025.12.16
    - Save the output files in the `Output` folder.
    - Changed default Babel-Only node to VE7ZDH-tube-1

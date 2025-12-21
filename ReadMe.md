@@ -6,7 +6,7 @@
       for different purposes.
 
 ### Usage:
-   * Copy all five files to a folder.
+   * Copy all files to a local folder.
    * Edit the optional `exclude_nodes.txt` and `include_nodes.txt` text
      files.
    * Run `aredn_info.py`

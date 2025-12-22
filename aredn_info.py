@@ -46,13 +46,13 @@ if not os.path.exists(output_path):
     os.makedirs(output_path)
 
 # Some user input variables:
-olsr_message = 'Enter your node id or simply press Enter to use:'
+olsr_message = 'Enter an OLSR node id or simply press Enter to use:'
 babel_message = 'Enter a BABEL-ONLY node id, press Enter to use:'
 print('#' * 75)
 print(f'{olsr_message}  {olsr_node}')
-my_node1 = input().casefold() or olsr_node
+olsr_node = input().casefold() or olsr_node
 print(f'{babel_message}  {babel_node} , or Enter "N" to skip.')
-my_node2 = input().casefold() or babel_node
+babel_node = input().casefold() or babel_node
 
 
 # Progress Bar:
@@ -82,23 +82,24 @@ json_error = '''sysinfo.json from your node could not be loaded.
 '''
 
 # For API v1.14, use hosts=1
-my_url1 = f'http://{my_node1}.local.mesh/cgi-bin/' \
+olsr_url = f'http://{olsr_node}.local.mesh/cgi-bin/' \
     + 'sysinfo.json?link_info=1&hosts=1'
 try:
-    my_json1 = json.loads(urlr.urlopen(my_url1, timeout=timeout).read())
+    olsr_json = json.loads(urlr.urlopen(olsr_url, timeout=timeout).read())
 except:
-    print(f'{json_error}      {my_url1}  \n')
+    print(f'{json_error}      {olsr_url}  \n')
     exit()
 
 # For API v2, use nodes=1
-my_url2 = f'http://{my_node2}.local.mesh/cgi-bin/' \
+babel_url = f'http://{babel_node}.local.mesh/cgi-bin/' \
     + 'sysinfo.json?link_info=1&nodes=1'
 
-if my_node2 != 'n':
+if babel_node != 'n':
     try:
-        my_json2 = json.loads(urlr.urlopen(my_url2, timeout=timeout).read())
+        babel_json = json.loads(urlr.urlopen(
+            babel_url, timeout=timeout).read())
     except:
-        print(f'{json_error}      {my_url2}  \n')
+        print(f'{json_error}      {babel_url}  \n')
         exit()
 
 
@@ -114,15 +115,15 @@ if os.path.exists(script_path + 'exclude_nodes.txt'):
                 ignore_nodes.append(line.strip())
     file.close()
 
-# Read my_json1 and extract hosts from {'hosts': [{'name' : host}]}.
-for host in my_json1.get('hosts', ''):
+# Read olsr_json and extract hosts from {'hosts': [{'name' : host}]}.
+for host in olsr_json.get('hosts', ''):
     if (host['name'][0:4] == 'lan.'
             and host['name'][4:-11].casefold() not in ignore_nodes):
         nodes.append(host['name'][4:-11].casefold())
 
-# Read my_json2 and extract the nodes that were not in my_json1.
-if my_node2 != 'n':
-    for host in my_json2.get('nodes', ''):
+# Read babel_json and extract the nodes that were not in olsr_json.
+if babel_node != 'n':
+    for host in babel_json.get('nodes', ''):
         if (host['name'].casefold() not in nodes
                 and host['name'].casefold() not in ignore_nodes):
             nodes.append(host['name'].casefold())
@@ -147,10 +148,8 @@ failed_nodes = []   # Nodes that failed to download.
 def download_json(node):
     '''
     Download json page for a node. Called repeatedly by the Threading process.
-    Some older firmware versions seem to require the 8080 port number.
     '''
-    suffix = '.local.mesh:8080/cgi-bin/sysinfo.json?link_info=1'
-    url = f'http://{node}{suffix}'
+    url = f'http://{node}.local.mesh/cgi-bin/sysinfo.json?link_info=1'
 
     t_0 = time.monotonic()
     try:
@@ -177,8 +176,8 @@ else:
     stop = num_of_threads
 
 download_message = f'''
-Attempting to download {len(nodes):0.0f} json pages.
-(Unreachable nodes will timeout after {timeout:0.0f} seconds.)'''
+Attempting to download {len(nodes):0.0f} json pages.''' \
+    + f''' (Unreachable nodes will timeout after {timeout:0.0f} s)'''
 print(download_message)
 
 # This loops starts the multiple downloads, but exits before they are finished.

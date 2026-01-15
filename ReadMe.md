@@ -10,7 +10,7 @@
    * Edit the optional `exclude_nodes.txt` and `include_nodes.txt` text
      files.
    * Run `python aredn_info.py`
-   * The four output files will be saved in the `Output` folder alongside
+   * The five output files will be saved in the `Output` folder alongside
      `aredn_info.py`
 
 ### Some Limitations:

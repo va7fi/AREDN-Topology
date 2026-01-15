@@ -31,8 +31,8 @@ global json_pages
 date_time = time.strftime('%Y%m%d_%H%M%S', time.localtime())
 num_of_threads = 30
 timeout = 15
+babel_node = 'VA7FI-HAPAC3-1'
 olsr_node = 'VE7NA-RADIO-ROOM'
-babel_node = 'VE7TBP-HAP-1'
 
 # Get script path and create Output folder if it doesn't exist.
 if sys.platform == 'win32':
@@ -46,13 +46,13 @@ if not os.path.exists(output_path):
     os.makedirs(output_path)
 
 # Some user input variables:
-olsr_message = 'Enter an OLSR node id or simply press Enter to use:'
 babel_message = 'Enter a BABEL-ONLY node id, press Enter to use:'
+olsr_message = 'Enter an OLSR node id or simply press Enter to use:'
 print('#' * 75)
-print(f'{olsr_message}  {olsr_node}')
-olsr_node = input().casefold() or olsr_node
-print(f'{babel_message}  {babel_node} , or Enter "N" to skip.')
+print(f'{babel_message}  {babel_node}')
 babel_node = input().casefold() or babel_node
+print(f'{olsr_message}  {olsr_node} , or Enter "N" to skip.')
+olsr_node = input().casefold() or olsr_node
 
 
 # Progress Bar:
@@ -81,25 +81,26 @@ json_error = '''sysinfo.json from your node could not be loaded.
    *  and that the following URL is valid:
 '''
 
-# For API v1.14, use hosts=1
-olsr_url = f'http://{olsr_node}.local.mesh/cgi-bin/' \
-    + 'sysinfo.json?link_info=1&hosts=1'
-try:
-    olsr_json = json.loads(urlr.urlopen(olsr_url, timeout=timeout).read())
-except:
-    print(f'{json_error}      {olsr_url}  \n')
-    exit()
-
 # For API v2, use nodes=1
 babel_url = f'http://{babel_node}.local.mesh/cgi-bin/' \
     + 'sysinfo.json?link_info=1&nodes=1'
 
-if babel_node != 'n':
+try:
+    babel_json = json.loads(urlr.urlopen(
+        babel_url, timeout=timeout).read())
+except:
+    print(f'{json_error}      {babel_url}  \n')
+    exit()
+
+
+# For API v1.14, use hosts=1
+olsr_url = f'http://{olsr_node}.local.mesh/cgi-bin/' \
+    + 'sysinfo.json?link_info=1&hosts=1'
+if olsr_node != 'n':
     try:
-        babel_json = json.loads(urlr.urlopen(
-            babel_url, timeout=timeout).read())
+        olsr_json = json.loads(urlr.urlopen(olsr_url, timeout=timeout).read())
     except:
-        print(f'{json_error}      {babel_url}  \n')
+        print(f'{json_error}      {olsr_url}  \n')
         exit()
 
 
@@ -115,18 +116,18 @@ if os.path.exists(script_path + 'exclude_nodes.txt'):
                 ignore_nodes.append(line.strip())
     file.close()
 
-# Read olsr_json and extract hosts from {'hosts': [{'name' : host}]}.
-for host in olsr_json.get('hosts', ''):
-    if (host['name'][0:4] == 'lan.'
-            and host['name'][4:-11].casefold() not in ignore_nodes):
-        nodes.append(host['name'][4:-11].casefold())
+# Read babel_json and extract nodes
+for host in babel_json.get('nodes', ''):
+    if (host['name'].casefold() not in ignore_nodes):
+        nodes.append(host['name'].casefold())
 
-# Read babel_json and extract the nodes that were not in olsr_json.
-if babel_node != 'n':
-    for host in babel_json.get('nodes', ''):
-        if (host['name'].casefold() not in nodes
-                and host['name'].casefold() not in ignore_nodes):
-            nodes.append(host['name'].casefold())
+# Read olsr_json and extract nodes that were not in olsr_json..
+if olsr_node != 'n':
+    for host in olsr_json.get('hosts', ''):
+        if (host['name'][0:4] == 'lan.'
+                and host['name'][4:-11].casefold() not in ignore_nodes
+                and host['name'][4:-11].casefold() not in nodes):
+            nodes.append(host['name'][4:-11].casefold())
 
 # Read include_nodes.txt
 if os.path.exists(script_path + 'include_nodes.txt'):
@@ -142,7 +143,7 @@ nodes = sorted(nodes, key=str.lower)
 
 # For each node, download the json pages and build a dictionary
 json_pages = {}     # {node:json_page, ...}
-failed_nodes = []   # Nodes that failed to download.
+unreachable_nodes = []   # Nodes that failed to download.
 
 
 def download_json(node):
@@ -158,7 +159,7 @@ def download_json(node):
         t_1 = time.monotonic()
         delta_time = t_1 - t_0
     except:
-        failed_nodes.append(node)           # Note the failed nodes.
+        unreachable_nodes.append(node)           # Note the failed nodes.
         t_1 = time.monotonic()
         delta_time = t_1 - t_0
         pass
@@ -175,9 +176,8 @@ if end < num_of_threads:
 else:
     stop = num_of_threads
 
-download_message = f'''
-Attempting to download {len(nodes):0.0f} json pages.''' \
-    + f''' (Unreachable nodes will timeout after {timeout:0.0f} s)'''
+download_message = f'''Attempting to download {len(nodes):0.0f} json pages.''' \
+    + f''' (Timeout set to {timeout:0.0f} s)'''
 print(download_message)
 
 # This loops starts the multiple downloads, but exits before they are finished.
@@ -220,20 +220,10 @@ for t in threads:
 t_1 = time.monotonic()
 delta_time = t_1 - t_0
 
-# Print Download Results
-print(f'\n{len(json_pages)} / {len(nodes)} pages were downloaded.')
 
-if len(failed_nodes) > 1:
-    print(f'{len(failed_nodes)} pages were not downloaded: '
-          + str(failed_nodes)[1:-1].replace("'", ""))
-
-elif len(failed_nodes) > 0:
-    print(f'{len(failed_nodes)} page was not downloaded: '
-          + str(failed_nodes)[1:-1].replace("'", ""))
-
-# Remove failed_nodes from nodes
-for failed_node in failed_nodes:
-    nodes.remove(failed_node)
+# Remove unreachable_nodes from nodes
+for node in unreachable_nodes:
+    nodes.remove(node)
 
 
 # Write output files:
@@ -372,9 +362,21 @@ with open(output_path + date_time + '_Node_Info.csv', 'w') as file:
         file.write('\n')
 file.close()
 
+# Unreachable_Nodes.txt
+files.append('Unreachable_Nodes.txt')
+header = '''The following nodes were listed in the json files, but their individual
+pages could not be reached and downloaded:
+
+'''
+with open(output_path + date_time + '_Unreachable_Nodes.txt', 'w') as file:
+    file.write(header)
+    for node in unreachable_nodes:
+        file.write(node + '\n')
+file.close()
+
 # Final Message
 files.sort()
-print()
+print('\n')
 print(f'These output files were saved in   {output_path}')
 for file in files:
     print(f'  * {date_time}_{file}')

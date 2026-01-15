@@ -1,5 +1,14 @@
 # Change Log
 
+### 2026.01.14
+Now that the stable AREDN release (4.26.1.0) is Babel-only and uses
+API v2, I made the following changes to the `aredn_info.py` script:
+
+   - The default node needs to be Babel-only with API v2
+   - The optional node needs to be OSLR-capable with API v1.14
+   - Added the creation of `Unreachable_Nodes.txt` as an output file.
+   - Cleaned up the code a bit.
+
 ### 2025.12.21
    - Fixed a small bug where nodes added in the `include_nodes.txt` that
      are also found by the API were being duplicated.

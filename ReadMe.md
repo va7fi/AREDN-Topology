@@ -2,7 +2,7 @@
 `aredn_info.py` does two things:
    1. It reads all `http://[node]/cgi-bin/sysinfo.json?link_info=1&hosts=1&nodes=1`
       pages available on a given network and
-   2. And creates `txt` and `csv` output files that synthesize the network
+   2. It creates `txt` and `csv` output files that synthesize the network
       information for different purposes.
 
 ### Usage:
